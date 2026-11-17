@@ -4,8 +4,6 @@
 
 Venice has a privacy-first OpenAI-compatible inference API. This package registers a `venice` provider so Hermes can route chat through `https://api.venice.ai/api/v1`.
 
-> **Disclaimer:** This is an independent, open source project. It is not officially maintained, endorsed, or supported by Venice AI.
-
 ## Requirements
 
 Hermes Agent 0.22.6 or newer. Older Hermes releases still load the provider and route chat through it, but don't pick up its context windows, cost estimates or per-model capabilities. On those releases, upgrade Hermes or stay on hermes-provider-venice 0.2.1.

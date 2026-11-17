@@ -4,7 +4,7 @@ version = "0.2.2"
 description = "Venice AI model provider plugin for Hermes Agent"
 readme = "README.md"
 authors = [
-    { name = "Joshua Mo", email = "joshua.mo.876@gmail.com" }
+    { name = "Venice AI" }
 ]
 requires-python = ">=3.12"
 license = "MIT"

@@ -2,8 +2,6 @@
 
 Adds [Venice AI](https://venice.ai) as a model provider in [Hermes Agent](https://github.com/NousResearch/hermes-agent). Venice has a privacy-first, OpenAI-compatible inference API, and this plugin registers a `venice` provider that sends chat requests to `https://api.venice.ai/api/v1`.
 
-> **Disclaimer:** This is an independent, open source project. It is not officially maintained, endorsed, or supported by Venice AI.
-
 Requires Hermes Agent 0.22.6 or newer.
 
 ## Install
