@@ -573,8 +573,8 @@ def test_github_links_use_the_owning_account() -> None:
     ]
     for path in sources:
         text = path.read_text(encoding="utf-8")
-        assert "github.com/joshua-mo/" not in text, path
-    assert "github.com/joshua-mo-143/hermes-provider-venice" in (
+        assert "github.com/joshua-mo" not in text, path
+    assert "github.com/veniceai/venice-hermes-plugin" in (
         ROOT / "pyproject.toml"
     ).read_text(encoding="utf-8")
 

@@ -4,7 +4,7 @@ version = "0.2.2"
 description = "Venice AI model provider plugin for Hermes Agent"
 readme = "README.md"
 authors = [
-    { name = "Joshua Mo", email = "joshua.mo.876@gmail.com" }
+    { name = "Venice AI" }
 ]
 requires-python = ">=3.12"
 license = "MIT"
@@ -23,9 +23,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/joshua-mo-143/hermes-provider-venice"
-Repository = "https://github.com/joshua-mo-143/hermes-provider-venice"
-Issues = "https://github.com/joshua-mo-143/hermes-provider-venice/issues"
+Homepage = "https://github.com/veniceai/venice-hermes-plugin"
+Repository = "https://github.com/veniceai/venice-hermes-plugin"
+Issues = "https://github.com/veniceai/venice-hermes-plugin/issues"
 Documentation = "https://docs.venice.ai"
 "Venice API" = "https://docs.venice.ai/api-reference/api-spec"
 

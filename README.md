@@ -4,8 +4,6 @@
 
 Venice has a privacy-first OpenAI-compatible inference API. This package registers a `venice` provider so Hermes can route chat through `https://api.venice.ai/api/v1`.
 
-> **Disclaimer:** This is an independent, open source project. It is not officially maintained, endorsed, or supported by Venice AI.
-
 ## Requirements
 
 Hermes Agent 0.22.6 or newer. Older Hermes releases still load the provider and route chat through it, but don't pick up its context windows, cost estimates or per-model capabilities. On those releases, upgrade Hermes or stay on hermes-provider-venice 0.2.1.
@@ -15,7 +13,7 @@ Hermes Agent 0.22.6 or newer. Older Hermes releases still load the provider and 
 With Hermes's plugin installer, straight from GitHub:
 
 ```bash
-hermes plugins install joshua-mo-143/hermes-provider-venice#src/hermes_provider_venice
+hermes plugins install veniceai/venice-hermes-plugin#src/hermes_provider_venice
 ```
 
 Or as a Python package, in the same environment as Hermes:
@@ -25,7 +23,7 @@ Or as a Python package, in the same environment as Hermes:
 pip install hermes-provider-venice
 
 # From the latest GitHub main branch:
-pip install "git+https://github.com/joshua-mo-143/hermes-provider-venice.git@main"
+pip install "git+https://github.com/veniceai/venice-hermes-plugin.git@main"
 
 # Or from this checkout:
 pip install .
@@ -47,7 +45,7 @@ To upgrade to the latest release later, run:
 hermes-provider-venice update
 ```
 
-This runs `pip install --upgrade` for the package in the current environment and, if the compatibility installer was used, refreshes the copy in `$HERMES_HOME`. Pass `--pre` to include pre-releases, or `--source "git+https://github.com/joshua-mo-143/hermes-provider-venice.git@main"` to update from GitHub. Restart Hermes afterwards to load the new version.
+This runs `pip install --upgrade` for the package in the current environment and, if the compatibility installer was used, refreshes the copy in `$HERMES_HOME`. Pass `--pre` to include pre-releases, or `--source "git+https://github.com/veniceai/venice-hermes-plugin.git@main"` to update from GitHub. Restart Hermes afterwards to load the new version.
 
 Add your API key (create one at [https://venice.ai/settings/api](https://venice.ai/settings/api)). `hermes plugins install` asks for it if it isn't set; otherwise add it yourself:
 
