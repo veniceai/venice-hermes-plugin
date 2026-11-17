@@ -69,15 +69,15 @@ only after a reviewed pull request to `NousResearch/hermes-agent` pins it.
    ```yaml
    name: venice
    title: Venice AI
-   repo: https://github.com/<owner>/hermes-provider-venice
+   repo: https://github.com/veniceai/venice-hermes-plugin
    sha: <full commit SHA>
    subdir: src/hermes_provider_venice
    description: "Venice AI — privacy-first, OpenAI-compatible inference. Disclosure — sends your prompts, tool definitions, tool results and VENICE_API_KEY to api.venice.ai (or VENICE_BASE_URL); Venice passes requests for models its catalog marks anonymized, such as Claude, GPT and Gemini, on to the company that serves them. The plugin downloads Venice's model catalog with your key, sometimes on a short-lived background thread, keeps it in memory only, and reads or writes no files."
-   maintainer: <owner>
+   maintainer: veniceai
    tier: community
    category: models
    requires_hermes: ">=0.22.6"
-   docs_url: https://github.com/<owner>/hermes-provider-venice#readme
+   docs_url: https://github.com/veniceai/venice-hermes-plugin#readme
    version: "<version>"
    capabilities:
      provides_tools: []

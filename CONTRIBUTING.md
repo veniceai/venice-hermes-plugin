@@ -9,7 +9,7 @@ This project uses Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
 Clone your fork, then install the project and development dependencies:
 
 ```bash
-cd hermes-provider-venice
+cd venice-hermes-plugin
 uv sync
 ```
 
