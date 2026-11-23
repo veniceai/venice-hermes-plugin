@@ -47,10 +47,12 @@ and catalog reviewers check the rest.
 
 Follow [`docs/PUBLISHING.md`](docs/PUBLISHING.md) for every release.
 
-- Use `uv build` and `uv publish`; do not use Twine to publish.
+- Releases publish from `.github/workflows/publish.yml` with the PyPA publish
+action. When publishing by hand, use `uv build` and `uv publish`, not Twine.
 - Keep the version synchronized across `pyproject.toml`, the Python package,
 and `plugin.yaml`.
 - Run all checks and a dry-run before uploading.
-- Never publish unless the user explicitly requests it.
+- Never publish, push a release tag or create a GitHub release unless the user
+explicitly requests it.
 - Never store or expose PyPI credentials.
 
