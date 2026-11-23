@@ -1,6 +1,6 @@
 [project]
 name = "hermes-provider-venice"
-version = "0.3.0"
+version = "1.0.0"
 description = "Venice AI model provider plugin for Hermes Agent"
 readme = "README.md"
 authors = [
@@ -11,7 +11,7 @@ license = "MIT"
 license-files = ["LICENSE"]
 keywords = ["hermes", "hermes-agent", "venice", "llm", "provider"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",

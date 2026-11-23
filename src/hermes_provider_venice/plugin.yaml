@@ -1,6 +1,6 @@
 name: venice
 kind: model-provider
-version: 0.3.0
+version: 1.0.0
 description: Venice AI — Privacy-first, OpenAI-compatible inference
 author: Venice AI
 requires_hermes: ">=0.22.6"
