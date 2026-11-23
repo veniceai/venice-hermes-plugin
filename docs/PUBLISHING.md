@@ -1,7 +1,8 @@
-# Publishing to PyPI
+# Releasing
 
-Releases publish from GitHub Actions through PyPI trusted publishing, so no
-PyPI token is involved.
+Releases ship through the Hermes plugin catalog, which installs the plugin from
+GitHub at a reviewed, pinned commit. Nothing is published to PyPI or any other
+package index.
 
 1. Choose a new version and update it in:
    - `pyproject.toml`
@@ -26,74 +27,14 @@ PyPI token is involved.
    git push origin v<version>
    ```
 
-4. Create a GitHub release for the tag:
+4. Create a GitHub release for the tag that says what changed since the last
+   release:
 
    ```bash
-   gh release create v<version> --verify-tag --generate-notes
+   gh release create v<version> --verify-tag --notes-file notes.md
    ```
 
-   Publishing the release runs
-   [`.github/workflows/publish.yml`](../.github/workflows/publish.yml). It
-   checks that the tag matches the package version and is on `main`, runs the
-   checks, builds the distributions with uv and uploads them from the `pypi`
-   environment.
-
-5. Ask another maintainer to approve the `pypi` deployment, then confirm that
-   the new version is on PyPI.
-
-PyPI does not allow replacing an existing release. If publishing fails because
-the version already exists, increment the version and release again.
-
-## Release protection
-
-The workflow runs from the tagged commit, so its checks catch mistakes, such as
-a tag on an unmerged commit, but don't stop someone with write access from
-publishing. Before the workflow publishes anything, these settings must be in
-place:
-
-- The `pypi` environment requires a reviewer, prevents self-review and only
-  allows `v*` tags to deploy.
-- A tag ruleset limits who can create, update and delete `v*` tags.
-- The PyPI trusted publisher names the `pypi` environment, so a workflow
-  without `environment: pypi` can't publish.
-
-## Publishing by hand
-
-Publish by hand only when the workflow can't run, such as for a tag that
-predates it. After steps 1 and 2 above:
-
-1. Commit the reviewed release changes and confirm the release is reproducible
-   from a clean working tree:
-
-   ```bash
-   git diff --check
-   git status --short
-   ```
-
-   `git status --short` should produce no output. Do not publish from an
-   uncommitted or partially staged tree.
-
-2. Build fresh distribution artifacts:
-
-   ```bash
-   uv build --clear
-   ```
-
-3. Verify the upload without publishing:
-
-   ```bash
-   uv publish --dry-run --trusted-publishing never
-   ```
-
-4. Set a PyPI token and publish:
-
-   ```bash
-   read -rsp "PyPI token: " UV_PUBLISH_TOKEN && echo
-   export UV_PUBLISH_TOKEN
-   uv publish
-   ```
-
-Never commit or print the PyPI token.
+5. Submit the merge commit to the catalog, as described below.
 
 # Submitting to the Hermes plugin catalog
 

@@ -43,16 +43,15 @@ and catalog reviewers check the rest.
 - Disclose any new network call, file access, background work or credential
   use in both READMEs.
 
-## Publishing
+## Releasing
 
 Follow [`docs/PUBLISHING.md`](docs/PUBLISHING.md) for every release.
 
-- Releases publish from `.github/workflows/publish.yml` with the PyPA publish
-action. When publishing by hand, use `uv build` and `uv publish`, not Twine.
+- Releases ship through the Hermes plugin catalog. Do not publish to PyPI or
+any other package index.
 - Keep the version synchronized across `pyproject.toml`, the Python package,
 and `plugin.yaml`.
-- Run all checks and a dry-run before uploading.
-- Never publish, push a release tag or create a GitHub release unless the user
-explicitly requests it.
-- Never store or expose PyPI credentials.
+- Run all checks and the catalog check before tagging a release.
+- Never push a release tag, create a GitHub release or open a catalog pull
+request unless the user explicitly requests it.
 
