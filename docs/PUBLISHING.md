@@ -38,11 +38,24 @@ PyPI token is involved.
    checks, builds the distributions with uv and uploads them from the `pypi`
    environment.
 
-5. Approve the `pypi` deployment if the run waits for it, then confirm that the
-   new version is on PyPI.
+5. Ask another maintainer to approve the `pypi` deployment, then confirm that
+   the new version is on PyPI.
 
 PyPI does not allow replacing an existing release. If publishing fails because
 the version already exists, increment the version and release again.
+
+## Release protection
+
+The workflow runs from the tagged commit, so its checks catch mistakes, such as
+a tag on an unmerged commit, but don't stop someone with write access from
+publishing. Before the workflow publishes anything, these settings must be in
+place:
+
+- The `pypi` environment requires a reviewer, prevents self-review and only
+  allows `v*` tags to deploy.
+- A tag ruleset limits who can create, update and delete `v*` tags.
+- The PyPI trusted publisher names the `pypi` environment, so a workflow
+  without `environment: pypi` can't publish.
 
 ## Publishing by hand
 
