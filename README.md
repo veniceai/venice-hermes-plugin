@@ -10,18 +10,23 @@ Hermes Agent 0.22.6 or newer. Older Hermes releases still load the provider and 
 
 ## Install
 
-With Hermes's plugin installer, straight from GitHub:
+From the [Hermes plugin catalog](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugin-catalog), which installs the commit its maintainers reviewed:
+
+```bash
+hermes plugins install venice
+```
+
+Or straight from GitHub:
 
 ```bash
 hermes plugins install veniceai/venice-hermes-plugin#src/hermes_provider_venice
 ```
 
+To pin a GitHub install, add `--ref` with a full 40-character commit SHA.
+
 Or as a Python package, in the same environment as Hermes:
 
 ```bash
-# From PyPI:
-pip install hermes-provider-venice
-
 # From the latest GitHub main branch:
 pip install "git+https://github.com/veniceai/venice-hermes-plugin.git@main"
 
@@ -29,7 +34,7 @@ pip install "git+https://github.com/veniceai/venice-hermes-plugin.git@main"
 pip install .
 ```
 
-For a reproducible GitHub installation, replace `main` with a release tag.
+For a reproducible Python package installation, replace `main` with a release tag. The plugin is no longer published to PyPI, where `hermes-provider-venice` stops at 0.2.1.
 
 For Hermes releases without native packaged-provider discovery, or when the package is installed outside Hermes's environment, run the compatibility installer:
 
@@ -39,13 +44,7 @@ hermes-provider-venice install
 
 The package exposes both the current `hermes_agent.plugins` entry point and the dedicated `hermes_agent.model_providers` entry point. Hermes releases with native packaged-provider discovery load it automatically when it is installed in the same Python environment as Hermes. The compatibility command copies the same profile to `$HERMES_HOME/plugins/model-providers/venice`.
 
-To upgrade to the latest release later, run:
-
-```bash
-hermes-provider-venice update
-```
-
-This runs `pip install --upgrade` for the package in the current environment and, if the compatibility installer was used, refreshes the copy in `$HERMES_HOME`. Pass `--pre` to include pre-releases, or `--source "git+https://github.com/veniceai/venice-hermes-plugin.git@main"` to update from GitHub. Restart Hermes afterwards to load the new version.
+To update a catalog or GitHub install, run `hermes plugins update venice`. A catalog install moves to the catalog's current pin. A GitHub install pinned with `--ref` stays on its commit until you reinstall it with `--force --ref <commit>`. For a Python package install, re-run `pip install` with the new release tag, then `hermes-provider-venice install --force` if you used the compatibility installer. Restart Hermes afterwards to load the new version.
 
 Add your API key (create one at [https://venice.ai/settings/api](https://venice.ai/settings/api)). `hermes plugins install` asks for it if it isn't set; otherwise add it yourself:
 
@@ -107,7 +106,7 @@ Everything goes through Hermes's documented provider hooks; the plugin doesn't p
 - Venice's catalog marks each model as `private` or `anonymized`. Venice passes requests for anonymized models, such as the Claude, GPT and Gemini models, on to the company that serves them. See the [Venice documentation](https://docs.venice.ai) for details.
 - The plugin itself downloads Venice's model catalog (`GET /models?type=text`) with your key when Hermes lists models or looks up a context window. It also downloads it when Hermes sends a request and the cached copy is missing or more than five minutes old; that download runs on a short-lived background thread so the request doesn't wait.
 - The catalog is kept in memory only. The key is sent only over HTTPS or to a loopback address, and catalog requests never follow redirects.
-- The plugin collects no telemetry and doesn't read or write files. The separate `hermes-provider-venice` command, available only in the PyPI package, copies the plugin into `$HERMES_HOME`, and its `update` subcommand runs pip to download a newer release.
+- The plugin collects no telemetry and doesn't read or write files. The separate `hermes-provider-venice` command, available only in the Python package, copies the plugin into `$HERMES_HOME`.
 
 ## Develop
 

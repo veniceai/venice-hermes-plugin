@@ -38,7 +38,7 @@ from decimal import Decimal, InvalidOperation
 from typing import Any, NamedTuple
 from urllib.parse import urlparse
 
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 logger = logging.getLogger(__name__)
 

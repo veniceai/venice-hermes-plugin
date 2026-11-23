@@ -4,25 +4,21 @@ Current Hermes releases can discover packaged plugins through entry points.
 For older releases, or when this package is installed outside Hermes's Python
 environment, this command copies the plugin into the user plugin directory.
 
-It lives outside the ``hermes_provider_venice`` plugin directory because the
-Hermes plugin catalog installs that directory and does not allow code that
-updates the plugin.
+It lives outside the ``hermes_provider_venice`` plugin directory, which is the
+directory the Hermes plugin catalog installs.
 """
 
 from __future__ import annotations
 
 import argparse
-import importlib.metadata
 import importlib.util
 import os
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
 PLUGIN_NAME = "venice"
 PLUGIN_PACKAGE = "hermes_provider_venice"
-DISTRIBUTION_NAME = "hermes-provider-venice"
 
 
 def _hermes_home() -> Path:
@@ -69,45 +65,6 @@ def status() -> None:
         sys.exit(1)
 
 
-def _installed_version() -> str | None:
-    try:
-        return importlib.metadata.version(DISTRIBUTION_NAME)
-    except importlib.metadata.PackageNotFoundError:
-        return None
-
-
-def update(*, pre: bool = False, source: str | None = None) -> None:
-    """Upgrade this package via pip, then refresh any directory install.
-
-    Runs ``pip install --upgrade`` for this distribution (or *source*, e.g. a
-    ``git+https://…`` URL) in the current interpreter. When the compatibility
-    installer has copied the plugin into ``$HERMES_HOME``, that copy is
-    refreshed from the freshly upgraded files on disk so directory-plugin
-    installs pick up the new version too.
-    """
-    target = source or DISTRIBUTION_NAME
-    command = [sys.executable, "-m", "pip", "install", "--upgrade"]
-    if pre:
-        command.append("--pre")
-    command.append(target)
-
-    print(f"Updating {DISTRIBUTION_NAME} (was {_installed_version() or 'unknown'})…")
-    try:
-        subprocess.run(command, check=True)
-    except FileNotFoundError as exc:
-        raise RuntimeError(
-            "Could not run pip. Install pip in this environment, or upgrade "
-            "with the tool that installed this package (e.g. uv, pipx)."
-        ) from exc
-    except subprocess.CalledProcessError as exc:
-        raise RuntimeError(f"pip failed to upgrade {target} (exit {exc.returncode}).")
-
-    dest = _hermes_home() / "plugins" / "model-providers" / PLUGIN_NAME
-    if (dest / "__init__.py").is_file():
-        refreshed = install(force=True)
-        print(f"Refreshed directory install → {refreshed}")
-
-
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
         prog="hermes-provider-venice",
@@ -126,25 +83,6 @@ def main(argv: list[str] | None = None) -> None:
     )
 
     sub.add_parser("status", help="Check whether the provider is installed")
-
-    update_p = sub.add_parser(
-        "update",
-        help="Upgrade this package to the latest release via pip",
-    )
-    update_p.add_argument(
-        "--pre",
-        action="store_true",
-        help="Include pre-release versions",
-    )
-    update_p.add_argument(
-        "--source",
-        metavar="SPEC",
-        help=(
-            "pip requirement to upgrade from instead of PyPI "
-            "(e.g. 'git+https://github.com/veniceai/"
-            "venice-hermes-plugin.git@main')"
-        ),
-    )
 
     args = parser.parse_args(argv)
 
@@ -165,14 +103,4 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.cmd == "status":
         status()
-        return
-
-    if args.cmd == "update":
-        try:
-            update(pre=args.pre, source=args.source)
-        except RuntimeError as exc:
-            print(exc, file=sys.stderr)
-            sys.exit(1)
-        print()
-        print("Update complete. Restart Hermes to load the new version.")
         return
